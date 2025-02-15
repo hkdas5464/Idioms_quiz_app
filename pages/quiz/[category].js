@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 
-// Helper function to shuffle an array
+// Helper function to optionally shuffle questions/options (if needed)
 function shuffleArray(array) {
   const newArr = [...array];
   for (let i = newArr.length - 1; i > 0; i--) {
@@ -16,29 +16,27 @@ function shuffleArray(array) {
 export default function QuizPage() {
   const router = useRouter();
   const { category } = router.query;
-
+  
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  // Fetch questions from your MongoDB via your API, then shuffle both questions and options.
+  // Fetch questions from your API based on the category
   useEffect(() => {
     if (category) {
       fetch(`/api/questions/${category}`)
         .then((res) => res.json())
         .then((data) => {
-          // Shuffle questions and also shuffle each question's options.
+          // Optional: shuffle questions & options for randomness
           const shuffledQuestions = shuffleArray(data.questions).map((q) => ({
             ...q,
-            options: shuffleArray([...q.options]),
+            options: shuffleArray(q.options),
           }));
           setQuestions(shuffledQuestions);
         })
-        .catch((error) => {
-          console.error("Error fetching questions:", error);
-        });
+        .catch((error) => console.error("Error fetching questions:", error));
     }
   }, [category]);
 
@@ -56,7 +54,7 @@ export default function QuizPage() {
     const newAnswer = {
       question: currentQuestion.question,
       selected: selectedOption,
-      answer: currentQuestion.answer, // Correct answer
+      answer: currentQuestion.answer,
       correct: isCorrect,
       status: "attempted",
       questionScore,
@@ -113,7 +111,7 @@ export default function QuizPage() {
     return (
       <Layout>
         <div className="flex items-center justify-center min-h-screen">
-          <p className="text-xl">Loading quiz...</p>
+          <p className="text-2xl text-white">Loading quiz...</p>
         </div>
       </Layout>
     );
@@ -121,18 +119,25 @@ export default function QuizPage() {
 
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 dark:bg-gray-600">
-        <h1 className="mb-8 text-4xl font-bold capitalize">{category} Quiz</h1>
-        <div className="w-full max-w-lg p-8 transition duration-300 transform bg-white shadow-lg dark:bg-gray-800 rounded-xl">
-          <div className="mb-6">
-            <h2 className="text-xl font-medium">
+      <div className="flex items-center justify-center w-full min-h-screen p-8 dark:bg-gradient-to-br from-indigo-700 to-red-500">
+        <div className="w-full max-w-3xl p-8 bg-white shadow-2xl dark:bg-gray-800 rounded-2xl">
+          <h1 className="mb-6 text-4xl font-bold text-center text-gray-800 dark:text-gray-200">
+            {category} Quiz
+          </h1>
+          <div className="mb-4">
+            <h2 className="text-2xl font-semibold text-gray-700 dark:text-gray-300">
               Question {current + 1} of {questions.length}
             </h2>
-            <p className="mt-2 text-lg">{questions[current].question}</p>
+            <p className="mt-4 text-xl text-gray-800 dark:text-gray-100">
+              {questions[current].question}
+            </p>
           </div>
-          <form>
+          <div className="mt-6 space-y-4">
             {questions[current].options.map((option, index) => (
-              <div key={index} className="flex items-center mb-2 space-x-2">
+              <div
+                key={index}
+                className="flex items-center p-4 transition border border-gray-200 rounded-lg dark:border-gray-700 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
                 <input
                   type="radio"
                   id={`option-${index}`}
@@ -142,22 +147,22 @@ export default function QuizPage() {
                   onChange={(e) => setSelectedOption(e.target.value)}
                   className="w-5 h-5 text-blue-500 form-radio"
                 />
-                <label htmlFor={`option-${index}`} className="text-lg">
+                <label htmlFor={`option-${index}`} className="ml-4 text-lg text-gray-700 dark:text-gray-200">
                   {option}
                 </label>
               </div>
             ))}
-          </form>
-          <div className="flex justify-between mt-4">
+          </div>
+          <div className="flex justify-between mt-8">
             <button
               onClick={handleSkip}
-              className="px-4 py-2 font-semibold text-gray-800 transition bg-gray-300 rounded hover:bg-gray-400"
+              className="px-6 py-3 font-semibold text-gray-800 transition bg-gray-300 rounded-lg shadow hover:bg-gray-400"
             >
               Skip Question
             </button>
             <button
               onClick={handleSubmitAnswer}
-              className="px-4 py-2 font-semibold text-white transition bg-blue-500 rounded hover:bg-blue-600"
+              className="px-6 py-3 font-semibold text-white transition bg-blue-600 rounded-lg shadow hover:bg-blue-700"
             >
               Submit Answer
             </button>

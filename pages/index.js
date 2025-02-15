@@ -46,17 +46,26 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center p-4">
-        <h1 className="mb-12 text-5xl font-extrabold">Idioms Quiz</h1>
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+      <div className="flex flex-col items-center justify-center w-full min-h-screen p-8 dark:bg-gradient-to-br from-purple-600 via-pink-500 to-red-500">
+        <h1 className="pt-20 mb-12 text-6xl font-extrabold text-center dark:text-white drop-shadow-lg">
+          Welcome to Quiz Master
+        </h1>
+        <p className="max-w-2xl mb-16 text-2xl text-center dark:text-white drop-shadow-md">
+          Challenge your mind with our diverse set of quizzes. Choose a category below and test your knowledge!
+        </p>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {categories.map((cat) => (
             <div
               key={cat.id}
               onClick={() => router.push(`/quiz/${cat.id}`)}
-              className="p-6 transition duration-300 transform bg-white rounded-lg shadow-lg cursor-pointer dark:bg-gray-800 hover:scale-105 hover:shadow-2xl"
+              className="p-6 transition duration-500 transform bg-white shadow-2xl cursor-pointer dark:bg-gray-800 rounded-2xl hover:scale-105 hover:shadow-3xl"
             >
-              <h2 className="mb-4 text-3xl font-bold text-blue-600">{cat.title}</h2>
-              <p className="text-gray-700 dark:text-gray-300">{cat.description}</p>
+              <h2 className="mb-4 text-3xl font-bold text-gray-800 dark:text-gray-100">
+                {cat.title}
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300">
+                {cat.description}
+              </p>
             </div>
           ))}
         </div>
