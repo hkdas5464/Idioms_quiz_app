@@ -94,10 +94,10 @@ export default function Result() {
 
   return (
     <Layout>
-      <div className="min-h-screen flex flex-col items-center bg-gray-100 dark:bg-gray-900 p-4">
-        <div className="bg-white dark:bg-gray-800 shadow rounded p-8 w-full max-w-3xl">
-          <h1 className="text-4xl font-bold mb-4">Progress Report</h1>
-          <p className="text-xl mb-4">
+      <div className="flex flex-col items-center min-h-screen p-4 pt-20 bg-gray-100 dark:bg-gray-900">
+        <div className="w-full max-w-3xl p-8 bg-white rounded shadow dark:bg-gray-800">
+          <h1 className="mb-4 text-4xl font-bold">Progress Report</h1>
+          <p className="mb-4 text-xl">
             Your Total Score: {score} <br />
             Attempted: {attemptedCount} | Skipped: {skippedCount} <br />
             Accuracy: {accuracy}% <br />
@@ -106,7 +106,7 @@ export default function Result() {
           <div className="mb-8">
             <Bar data={data} options={options} />
           </div>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto"> 
             <table className="min-w-full border border-gray-300 dark:border-gray-700">
               <thead className="bg-gray-200 dark:bg-gray-700">
                 <tr>
@@ -124,23 +124,23 @@ export default function Result() {
                     key={index}
                     className={item.correct ? "bg-green-100 dark:bg-green-900" : "bg-red-100 dark:bg-red-900"}
                   >
-                    <td className="px-4 py-2 border text-center">{index + 1}</td>
+                    <td className="px-4 py-2 text-center border">{index + 1}</td>
                     <td className="px-4 py-2 border">{item.question}</td>
-                    <td className="px-4 py-2 border text-center">{item.selected}</td>
-                    <td className="px-4 py-2 border text-center">{item.answer}</td>
-                    <td className="px-4 py-2 border text-center">
+                    <td className="px-4 py-2 text-center border">{item.selected}</td>
+                    <td className="px-4 py-2 text-center border">{item.answer}</td>
+                    <td className="px-4 py-2 text-center border">
                       {item.status ? item.status.charAt(0).toUpperCase() + item.status.slice(1) : ""}
                     </td>
-                    <td className="px-4 py-2 border text-center">{item.questionScore}</td>
+                    <td className="px-4 py-2 text-center border">{item.questionScore}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div className="mt-8 flex justify-center">
+          <div className="flex justify-center mt-8">
             <button
               onClick={() => router.push('/')}
-              className="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition"
+              className="px-4 py-2 font-semibold text-white transition bg-blue-500 rounded hover:bg-blue-600"
             >
               Restart Quiz
             </button>

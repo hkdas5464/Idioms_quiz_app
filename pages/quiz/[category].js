@@ -119,7 +119,7 @@ export default function QuizPage() {
 
   return (
     <Layout>
-      <div className="flex items-center justify-center w-full min-h-screen p-8 dark:bg-gradient-to-br from-indigo-700 to-red-500">
+      <div className="flex items-center justify-center w-full min-h-screen p-8 pt-16 dark:bg-gradient-to-br from-indigo-700 to-red-500">
         <div className="w-full max-w-3xl p-8 bg-white shadow-2xl dark:bg-gray-800 rounded-2xl">
           <h1 className="mb-6 text-4xl font-bold text-center text-gray-800 dark:text-gray-200">
             {category} Quiz
