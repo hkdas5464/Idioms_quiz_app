@@ -10,6 +10,7 @@ module.exports = {
         fs: false,
         child_process: false,
         "util/types": false,
+        "timers/promises": false,
       };
     }
     return config;
