@@ -112,7 +112,7 @@ export default function QuizPage() {
   if (!category || questions.length === 0) {
     return (
       <Layout>
-        <div className="min-h-screen flex items-center justify-center">
+        <div className="flex items-center justify-center min-h-screen">
           <p className="text-xl">Loading quiz...</p>
         </div>
       </Layout>
@@ -121,9 +121,9 @@ export default function QuizPage() {
 
   return (
     <Layout>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-        <h1 className="text-4xl font-bold mb-8 capitalize">{category} Quiz</h1>
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 w-full max-w-lg transition transform duration-300 hover:scale-105 hover:shadow-2xl">
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 dark:bg-gray-600">
+        <h1 className="mb-8 text-4xl font-bold capitalize">{category} Quiz</h1>
+        <div className="w-full max-w-lg p-8 transition duration-300 transform bg-white shadow-lg dark:bg-gray-800 rounded-xl">
           <div className="mb-6">
             <h2 className="text-xl font-medium">
               Question {current + 1} of {questions.length}
@@ -132,7 +132,7 @@ export default function QuizPage() {
           </div>
           <form>
             {questions[current].options.map((option, index) => (
-              <div key={index} className="flex items-center space-x-2 mb-2">
+              <div key={index} className="flex items-center mb-2 space-x-2">
                 <input
                   type="radio"
                   id={`option-${index}`}
@@ -140,7 +140,7 @@ export default function QuizPage() {
                   value={option}
                   checked={selectedOption === option}
                   onChange={(e) => setSelectedOption(e.target.value)}
-                  className="form-radio text-blue-500 h-5 w-5"
+                  className="w-5 h-5 text-blue-500 form-radio"
                 />
                 <label htmlFor={`option-${index}`} className="text-lg">
                   {option}
@@ -151,13 +151,13 @@ export default function QuizPage() {
           <div className="flex justify-between mt-4">
             <button
               onClick={handleSkip}
-              className="py-2 px-4 bg-gray-300 text-gray-800 font-semibold rounded hover:bg-gray-400 transition"
+              className="px-4 py-2 font-semibold text-gray-800 transition bg-gray-300 rounded hover:bg-gray-400"
             >
               Skip Question
             </button>
             <button
               onClick={handleSubmitAnswer}
-              className="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition"
+              className="px-4 py-2 font-semibold text-white transition bg-blue-500 rounded hover:bg-blue-600"
             >
               Submit Answer
             </button>

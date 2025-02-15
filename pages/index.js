@@ -47,15 +47,15 @@ export default function Home() {
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center p-4">
-        <h1 className="text-5xl font-extrabold mb-12">Quiz Categories</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <h1 className="mb-12 text-5xl font-extrabold">Idioms Quiz</h1>
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
           {categories.map((cat) => (
             <div
               key={cat.id}
               onClick={() => router.push(`/quiz/${cat.id}`)}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-2xl"
+              className="p-6 transition duration-300 transform bg-white rounded-lg shadow-lg cursor-pointer dark:bg-gray-800 hover:scale-105 hover:shadow-2xl"
             >
-              <h2 className="text-3xl font-bold mb-4 text-blue-600">{cat.title}</h2>
+              <h2 className="mb-4 text-3xl font-bold text-blue-600">{cat.title}</h2>
               <p className="text-gray-700 dark:text-gray-300">{cat.description}</p>
             </div>
           ))}
