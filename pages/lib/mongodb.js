@@ -1,9 +1,7 @@
 // lib/mongodb.js
 import { MongoClient } from 'mongodb';
 
-// const uri = process.env.MONGODB_URI; // e.g., "mongodb+srv://username:password@cluster0.mongodb.net/quizdb?retryWrites=true&w=majority"
-
-const uri ="mongodb+srv://harendraabhishek:iArclNTHZgHyxdmf@cluster0.l9f5t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const uri = process.env.MONGODB_URI; // e.g., "mongodb+srv://username:password@cluster0.mongodb.net/quizdb?retryWrites=true&w=majority"
 const options = {};
 
 let client;
