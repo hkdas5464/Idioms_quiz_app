@@ -11,6 +11,7 @@ module.exports = {
         child_process: false,
         "util/types": false,
         "timers/promises": false,
+        "mongodb-client-encryption": false, // Ignore this optional module on the client
       };
     }
     return config;
