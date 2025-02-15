@@ -1,5 +1,5 @@
 // pages/api/questions/[category].js
-import clientPromise from "@/pages/lib/mongodb";
+import clientPromise from "@/lib/mongodb";
 
 export default async function handler(req, res) {
   const {
