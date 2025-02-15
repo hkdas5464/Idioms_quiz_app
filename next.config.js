@@ -11,7 +11,14 @@ module.exports = {
         child_process: false,
         "util/types": false,
         "timers/promises": false,
-        "mongodb-client-encryption": false, // Ignore this optional module on the client
+        "mongodb-client-encryption": false,
+        kerberos: false,
+        "@mongodb-js/zstd": false,
+        "@aws-sdk/credential-providers": false,
+        "gcp-metadata": false,
+        snappy: false,
+        socks: false,
+        aws4: false,
       };
     }
     return config;
