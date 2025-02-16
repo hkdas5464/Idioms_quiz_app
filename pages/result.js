@@ -1,6 +1,12 @@
 // pages/result.js
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+
+import { 
+  Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, 
+  Pagination, Button, 
+  Chip
+} from "@heroui/react";
 import Layout from '../components/Layout';
 
 // Import Chart.js components
@@ -44,6 +50,7 @@ export default function Result() {
   const correctPercentage = totalQuestions ? (correctCount / totalQuestions * 100).toFixed(1) : 0;
   const incorrectPercentage = totalQuestions ? (incorrectCount / totalQuestions * 100).toFixed(1) : 0;
   const skippedPercentage = totalQuestions ? (skippedCount / totalQuestions * 100).toFixed(1) : 0;
+  const totalmarks = (correctCount*4)+(incorrectCount*-1)+(skippedCount*0)
 
   // Calculate accuracy (for attempted questions only)
   const accuracy = attemptedCount ? (correctCount / attemptedCount * 100).toFixed(1) : 0;
@@ -59,9 +66,9 @@ export default function Result() {
         label: "Percentage of Total Questions (%)",
         data: [correctPercentage, incorrectPercentage, skippedPercentage],
         backgroundColor: [
-          "rgba(16, 185, 129, 0.7)",   // Green for correct
-          "rgba(239, 68, 68, 0.7)",    // Red for incorrect
-          "rgba(107, 114, 128, 0.7)"   // Gray for skipped
+          "rgb(23 201 100)",   // Green for correct
+          "rgb(243 18 96)",    // Red for incorrect
+          "rgb(245 165 36)"   // Gray for skipped
         ],
         borderColor: [
           "rgba(16, 185, 129, 1)",
@@ -92,50 +99,56 @@ export default function Result() {
     }
   };
 
+  const statusColorMap = {
+    4: "success",
+    0: "warning",
+    Skipped: "warning",
+  };
+
+
+  
+
   return (
     <Layout>
       <div className="flex flex-col items-center min-h-screen p-4 pt-20 bg-gray-100 dark:bg-gray-900">
         <div className="w-full max-w-3xl p-8 bg-white rounded shadow dark:bg-gray-800">
           <h1 className="mb-4 text-4xl font-bold">Progress Report</h1>
-          <p className="mb-4 text-xl">
+          <span className="mb-4 text-xl">
             Your Total Score: {score} <br />
-            Attempted: {attemptedCount} | Skipped: {skippedCount} <br />
+            <span className='text-green-400'> Attempted:{attemptedCount}</span> || <span className='text-red-500 '>Incorrect:{incorrectCount} </span> || <span className='text-yellow-600 '>Skipped: {skippedCount}  </span> <br />
+            <span>Total Marks: {totalmarks} </span>
             Accuracy: {accuracy}% <br />
             Percentage Marks Scored: {percentageMarks}%
-          </p>
+          </span>
           <div className="mb-8">
             <Bar data={data} options={options} />
           </div>
           <div className="overflow-x-auto"> 
-            <table className="min-w-full border border-gray-300 dark:border-gray-700">
-              <thead className="bg-gray-200 dark:bg-gray-700">
-                <tr>
-                  <th className="px-4 py-2 border">#</th>
-                  <th className="px-4 py-2 border">Question</th>
-                  <th className="px-4 py-2 border">Your Answer</th>
-                  <th className="px-4 py-2 border">Correct Answer</th>
-                  <th className="px-4 py-2 border">Status</th>
-                  <th className="px-4 py-2 border">Marks</th>
-                </tr>
-              </thead>
-              <tbody>
-                {userAnswers.map((item, index) => (
-                  <tr
-                    key={index}
-                    className={item.correct ? "bg-green-100 dark:bg-green-900" : "bg-red-100 dark:bg-red-900"}
-                  >
-                    <td className="px-4 py-2 text-center border">{index + 1}</td>
-                    <td className="px-4 py-2 border">{item.question}</td>
-                    <td className="px-4 py-2 text-center border">{item.selected}</td>
-                    <td className="px-4 py-2 text-center border">{item.answer}</td>
-                    <td className="px-4 py-2 text-center border">
-                      {item.status ? item.status.charAt(0).toUpperCase() + item.status.slice(1) : ""}
-                    </td>
-                    <td className="px-4 py-2 text-center border">{item.questionScore}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="w-full">
+      <Table aria-label="Quiz Results Table" isStriped>
+        <TableHeader>
+          <TableColumn>#</TableColumn>
+          <TableColumn>Question</TableColumn>
+          <TableColumn>Your Answer</TableColumn>
+          <TableColumn>Correct Answer</TableColumn>
+          <TableColumn>Status</TableColumn>
+          <TableColumn>Marks</TableColumn>
+        </TableHeader>
+        <TableBody>
+          {userAnswers.map((item, index) => (
+            <TableRow key={index}>
+              <TableCell>{index + 1}</TableCell>
+              <TableCell>{item.question}</TableCell>
+              <TableCell><Chip className="gap-4 capitalize" color={statusColorMap[item.questionScore] || 'danger'} size="sm" variant="flat">
+              <span className='p-2'>{item.selected}</span> </Chip></TableCell>
+              <TableCell>{item.answer}</TableCell>
+              <TableCell><Chip className="capitalize" color={statusColorMap[item.questionScore] || 'danger'} size="sm" variant="flat"><span className='p-2'>{item.status ? item.status.charAt(0).toUpperCase() + item.status.slice(1) : ""}</span></Chip></TableCell>
+              <TableCell>{item.questionScore}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      </div>
           </div>
           <div className="flex justify-center mt-8">
             <button
